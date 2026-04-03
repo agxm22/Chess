@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+<title>🌸 Pink Chess 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;900&family=Dancing+Script:wght@700&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ph:#FF4D94; --pm:#FFB3D1; --pl:#FFD6E7;
+  --lav:#E8D5F5; --gold:#FFD700; --white:#fff;
+  --dark:#1a0830; --mid:#3d1060;
+}
+html,body{
+  width:100%;height:100%;overflow:hidden;
+  font-family:'Fredoka One',cursive;
+  background:#1a0830;
+  touch-action:none;
+}
+#wrap{
+  width:100%;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:radial-gradient(ellipse at 50% 30%,#3d1060 0%,#1a0830 70%);
+  position:relative;overflow:hidden;
+}
+.bstar{position:absolute;border-radius:50%;pointer-events:none;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.9;transform:scale(1.3)}}
+
+/* ── OVERLAYS ── */
+.ov{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:rgba(20,4,48,.92);
+  backdrop-filter:blur(12px);
+  border-radius:18px;z-index:30;
+  gap:clamp(8px,2vh,14px);
+  padding:clamp(14px,4vw,28px) clamp(12px,4vw,24px);
+  overflow-y:auto;
+}
+.ov h1{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.8rem,6vw,3rem);
+  color:var(--ph);
+  text-shadow:0 0 20px rgba(255,77,148,.8),3px 3px 0 #fff1;
+  text-align:center;line-height:1.1;
+}
+.sub{
+  font-family:'Nunito',sans-serif;
+  font-size:clamp(.72rem,2.5vw,.96rem);
+  color:#e8b0cc;text-align:center;font-weight:700;
+  max-width:320px;
+}
+.btn{
+  background:linear-gradient(145deg,var(--ph),#b0106a);
+  color:#fff;border:none;border-radius:50px;
+  padding:clamp(10px,2.5vw,14px) clamp(28px,7vw,48px);
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(.9rem,3vw,1.3rem);
+  cursor:pointer;pointer-events:all;
+  box-shadow:0 6px 0 #7a0a4a,0 8px 24px rgba(255,77,148,.5);
+  transition:transform .1s,box-shadow .1s;letter-spacing:1px;
+}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #7a0a4a;}
+.btn.sec{
+  background:rgba(255,255,255,.08);
+  box-shadow:0 4px 0 rgba(0,0,0,.3), 0 0 0 2px rgba(255,77,148,.4);
+}
+.love-msg{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(.9rem,3.5vw,1.4rem);
+  color:#ff9cc8;text-align:center;line-height:1.45;
+  background:rgba(255,77,148,.12);
+  border-radius:14px;padding:clamp(8px,2vw,12px) clamp(12px,3vw,18px);
+  border:1.5px solid rgba(255,77,148,.4);
+  max-width:min(295px,88%);
+  animation:plse 2.2s ease-in-out infinite;
+}
+@keyframes plse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.cards{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
+.card{
+  background:rgba(255,255,255,.07);
+  border:2px solid rgba(255,77,148,.4);
+  border-radius:14px;padding:clamp(8px,2vw,12px) clamp(14px,4vw,22px);
+  text-align:center;
+}
+.card .lbl{font-family:'Nunito',sans-serif;font-size:clamp(.6rem,2vw,.74rem);color:#e8b0cc;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.card .val{font-size:clamp(1.3rem,4vw,1.8rem);color:var(--ph);line-height:1;}
+.bow{font-size:clamp(1.5rem,5vw,2.2rem);}
+.bop{animation:bop 1s ease-in-out infinite;display:inline-block;}
+@keyframes bop{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* ── DIFFICULTY SLIDER ── */
+.diff-wrap{
+  width:min(300px,85%);
+  display:flex;flex-direction:column;
+  align-items:center;gap:10px;
+}
+.diff-label-row{
+  display:flex;justify-content:space-between;
+  width:100%;
+  font-family:'Nunito',sans-serif;
+  font-size:clamp(.62rem,2vw,.78rem);
+  color:#e8b0cc;font-weight:700;
+}
+.diff-label-row span{opacity:.7;}
+.diff-label-row span.act{opacity:1;color:var(--ph);}
+
+input[type=range]#diffSlider{
+  -webkit-appearance:none;
+  width:100%;height:8px;
+  background:rgba(255,255,255,.1);
+  border-radius:4px;outline:none;
+  border:1px solid rgba(255,77,148,.3);
+  cursor:pointer;
+}
+input[type=range]#diffSlider::-webkit-slider-thumb{
+  -webkit-appearance:none;
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(145deg,var(--ph),#b0106a);
+  box-shadow:0 0 0 3px rgba(255,77,148,.4),0 4px 10px rgba(255,77,148,.5);
+  cursor:pointer;
+}
+input[type=range]#diffSlider::-moz-range-thumb{
+  width:26px;height:26px;border-radius:50%;border:none;
+  background:linear-gradient(145deg,var(--ph),#b0106a);
+  cursor:pointer;
+}
+#diffBadge{
+  background:rgba(255,77,148,.15);
+  border:1.5px solid rgba(255,77,148,.5);
+  border-radius:30px;padding:6px 18px;
+  font-size:clamp(.8rem,2.5vw,1rem);
+  color:#fff;text-align:center;min-width:180px;
+}
+
+/* ── GAME LAYOUT ── */
+#gameWrap{
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  width:100%;height:100%;
+  position:absolute;inset:0;
+  z-index:5;
+  padding:6px 6px 0;
+}
+
+/* top HUD */
+#hud{
+  display:flex;width:100%;
+  justify-content:space-between;align-items:center;
+  padding:4px 8px;max-width:520px;
+}
+.pill{
+  background:rgba(255,255,255,.1);
+  border:1.5px solid rgba(255,77,148,.5);
+  border-radius:30px;padding:4px 12px;
+  font-size:clamp(.65rem,2.3vw,.9rem);color:#FFD6E7;
+  white-space:nowrap;display:flex;align-items:center;gap:4px;
+}
+.pill span{color:var(--ph);}
+#statusBar{
+  font-family:'Nunito',sans-serif;font-weight:700;
+  font-size:clamp(.7rem,2.5vw,.9rem);
+  color:#FFB3D1;text-align:center;padding:2px 0;
+  min-height:22px;
+}
+
+/* board container */
+#boardArea{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+  flex:1;width:100%;
+}
+
+/* chess board */
+#board{
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  grid-template-rows:repeat(8,1fr);
+  border:3px solid var(--ph);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 0 0 6px rgba(255,77,148,.2),0 0 40px rgba(255,77,148,.35),0 0 80px rgba(180,50,200,.2);
+  touch-action:none;
+  user-select:none;
+}
+.sq{
+  display:flex;align-items:center;justify-content:center;
+  position:relative;cursor:pointer;
+  transition:background .12s;
+}
+.sq.light{ background:#ffe0ef; }
+.sq.dark { background:#c45080; }
+.sq.selected{ background:#FFD700 !important; box-shadow:inset 0 0 0 3px #fff; }
+.sq.hint   {
+  background:rgba(255,215,0,0.35) !important;
+  box-shadow:inset 0 0 0 3px rgba(255,215,0,0.6);
+}
+.sq.hint::after{
+  content:'';position:absolute;
+  width:38%;height:38%;border-radius:50%;
+  background:rgba(255,215,0,0.55);
+  pointer-events:none;
+}
+.sq.capture-hint{
+  background:rgba(255,77,100,.45) !important;
+  box-shadow:inset 0 0 0 3px rgba(255,100,120,.7);
+}
+.sq.last-from{ background:rgba(255,220,0,.22) !important; }
+.sq.last-to  { background:rgba(255,220,0,.38) !important; }
+.sq.king-check{ background:rgba(255,0,60,.55) !important; }
+
+/* coord labels */
+.coord-rank,.coord-file{
+  position:absolute;
+  font-family:'Nunito',sans-serif;
+  font-size:clamp(7px,1.5vw,11px);
+  font-weight:700;
+  opacity:.55;
+  pointer-events:none;
+  line-height:1;
+}
+.coord-rank{top:2px;left:3px;}
+.coord-file{bottom:1px;right:3px;}
+.sq.light .coord-rank,.sq.light .coord-file{color:#c45080;}
+.sq.dark  .coord-rank,.sq.dark  .coord-file{color:#ffe0ef;}
+
+/* piece */
+.piece{
+  font-size:clamp(18px,5.5vw,38px);
+  line-height:1;
+  pointer-events:none;
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.45));
+  transition:transform .08s;
+}
+
+/* captured pieces row */
+#capturedWrap{
+  display:flex;width:100%;max-width:520px;
+  justify-content:space-between;
+  padding:3px 8px;gap:6px;flex-wrap:wrap;
+}
+.captured-row{
+  display:flex;align-items:center;gap:2px;flex-wrap:wrap;
+  min-height:22px;max-width:48%;
+}
+.cap-piece{font-size:clamp(10px,3vw,16px);opacity:.7;}
+
+/* promo modal */
+#promoModal{
+  position:absolute;inset:0;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(20,4,48,.88);
+  backdrop-filter:blur(8px);
+  z-index:50;border-radius:10px;
+}
+#promoBox{
+  background:#2a0850;
+  border:2px solid var(--ph);
+  border-radius:16px;padding:18px 24px;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+#promoBox h3{color:var(--ph);font-size:1.2rem;}
+.promo-choices{display:flex;gap:12px;}
+.promo-piece{
+  font-size:2.2rem;cursor:pointer;padding:8px;
+  border-radius:12px;border:2px solid rgba(255,77,148,.3);
+  background:rgba(255,255,255,.06);
+  transition:background .12s,border-color .12s;
+}
+.promo-piece:hover{background:rgba(255,77,148,.2);border-color:var(--ph);}
+
+/* bottom controls */
+#controls{
+  display:flex;gap:8px;padding:6px 8px 8px;
+  width:100%;max-width:520px;justify-content:center;flex-wrap:wrap;
+}
+.ctrl-btn{
+  background:rgba(255,255,255,.07);
+  border:1.5px solid rgba(255,77,148,.4);
+  border-radius:24px;padding:6px 16px;
+  color:#FFD6E7;font-family:'Fredoka One',cursive;
+  font-size:clamp(.7rem,2.3vw,.9rem);
+  cursor:pointer;transition:background .12s;
+}
+.ctrl-btn:hover{background:rgba(255,77,148,.18);}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+  <!-- bg stars -->
+
+  <!-- ══ MENU OVERLAY ══ -->
+  <div class="ov" id="menuOv">
+    <div class="bow">🎀</div>
+    <span class="bop" style="font-size:clamp(2.2rem,7vw,3.5rem)">♟️</span>
+    <h1>Pink Chess!</h1>
+    <p class="sub">Play a beautiful game of chess against the Buddha Bot 🌸<br>You are always the White pieces 💗</p>
+
+    <!-- DIFFICULTY SLIDER -->
+    <div class="diff-wrap">
+      <div id="diffBadge">🐱 Kitten — Super Easy</div>
+      <input type="range" id="diffSlider" min="1" max="5" value="1" step="1"/>
+      <div class="diff-label-row">
+        <span id="dl1" class="act">🐱<br>Kitten</span>
+        <span id="dl2">🌸<br>Bunny</span>
+        <span id="dl3">🦋<br>Fairy</span>
+        <span id="dl4">💫<br>Star</span>
+        <span id="dl5">👑<br>Queen</span>
+      </div>
+    </div>
+
+    <button class="btn" id="startBtn">Let's Play! 🌸</button>
+    <p style="font-family:'Nunito',sans-serif;font-size:.72rem;color:#b088a0;text-align:center;">
+      White = You &nbsp;·&nbsp; Black = Bot &nbsp;·&nbsp; Tap a piece then tap where to move
+    </p>
+  </div>
+
+  <!-- ══ GAME OVER OVERLAY ══ -->
+  <div class="ov" id="gameOverOv" style="display:none">
+    <div class="bow">🎀</div>
+    <h1 id="resultTitle">Game Over!</h1>
+    <div class="love-msg" id="resultMsg">✨ You would always win for me 🎀💗</div>
+    <div class="cards">
+      <div class="card"><div class="lbl">Moves</div><div class="val" id="finalMoves">0</div></div>
+      <div class="card"><div class="lbl">Difficulty</div><div class="val" id="finalDiff">🌸</div></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+      <button class="btn" id="restartBtn">Play Again! 🎀</button>
+      <button class="btn sec" id="menuBtn">Menu 🌸</button>
+    </div>
+  </div>
+
+  <!-- ══ GAME UI ══ -->
+  <div id="gameWrap">
+    <div id="hud">
+      <div class="pill">🌸 <span id="turnPill">Your Turn</span></div>
+      <div class="pill">♟️ Moves: <span id="moveCount">0</span></div>
+      <div class="pill" id="diffPill">🐱 Kitten</div>
+    </div>
+    <div id="statusBar">Tap a white piece to start!</div>
+    <div id="boardArea">
+      <div id="board"></div>
+      <div id="promoModal">
+        <div id="promoBox">
+          <h3>Promote Pawn! 👑</h3>
+          <div class="promo-choices">
+            <div class="promo-piece" data-p="Q">♛</div>
+            <div class="promo-piece" data-p="R">♜</div>
+            <div class="promo-piece" data-p="B">♝</div>
+            <div class="promo-piece" data-p="N">♞</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="capturedWrap">
+      <div class="captured-row" id="capByBot" title="Captured by bot"></div>
+      <div class="captured-row" id="capByPlayer" title="Captured by you" style="justify-content:flex-end"></div>
+    </div>
+    <div id="controls">
+      <button class="ctrl-btn" id="undoBtn">↩ Undo</button>
+      <button class="ctrl-btn" id="resignBtn">🏳 Resign</button>
+      <button class="ctrl-btn" id="menuBtnGame">🌸 Menu</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  BG STARS
+// ══════════════════════════════════════════════════════════
+(function(){
+  const wrap=document.getElementById('wrap');
+  for(let i=0;i<55;i++){
+    const el=document.createElement('div');
+    el.className='bstar';
+    const sz=Math.random()*4+1.5;
+    el.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:hsl(${310+Math.random()*60},80%,${70+Math.random()*20}%);animation-duration:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s;`;
+    wrap.appendChild(el);
+  }
+})();
+
+// ══════════════════════════════════════════════════════════
+//  DIFFICULTY SLIDER
+// ══════════════════════════════════════════════════════════
+const DIFF_NAMES = ['','🐱 Kitten — Super Easy','🌸 Bunny — Easy','🦋 Fairy — Medium','💫 Star — Hard','👑 Queen — Very Hard'];
+const DIFF_SHORT = ['','🐱 Kitten','🌸 Bunny','🦋 Fairy','💫 Star','👑 Queen'];
+const slider = document.getElementById('diffSlider');
+const diffBadge = document.getElementById('diffBadge');
+
+slider.addEventListener('input',()=>{
+  const v=+slider.value;
+  diffBadge.textContent = DIFF_NAMES[v];
+  for(let i=1;i<=5;i++){
+    document.getElementById('dl'+i).classList.toggle('act',i===v);
+  }
+});
+
+// ══════════════════════════════════════════════════════════
+//  CHESS ENGINE
+// ══════════════════════════════════════════════════════════
+
+// Piece constants: uppercase = White, lowercase = Black
+// K/Q/R/B/N/P  k/q/r/b/n/p
+const EMPTY = '.';
+
+// Unicode glyphs  [white, black]
+const GLYPHS = {
+  K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘', P:'♙',
+  k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟'
+};
+
+// Starting FEN position
+const START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+// Piece values for evaluation
+const PIECE_VAL = {P:100,N:320,B:330,R:500,Q:900,K:20000,
+                   p:100,n:320,b:330,r:500,q:900,k:20000};
+
+// ── Positional tables (from white's perspective, row 0 = rank 8) ──
+const PST = {
+  P:[[ 0, 0, 0, 0, 0, 0, 0, 0],
+     [50,50,50,50,50,50,50,50],
+     [10,10,20,30,30,20,10,10],
+     [ 5, 5,10,25,25,10, 5, 5],
+     [ 0, 0, 0,20,20, 0, 0, 0],
+     [ 5,-5,-10, 0, 0,-10,-5, 5],
+     [ 5,10,10,-20,-20,10,10, 5],
+     [ 0, 0, 0, 0, 0, 0, 0, 0]],
+  N:[[-50,-40,-30,-30,-30,-30,-40,-50],
+     [-40,-20, 0, 0, 0, 0,-20,-40],
+     [-30, 0,10,15,15,10, 0,-30],
+     [-30, 5,15,20,20,15, 5,-30],
+     [-30, 0,15,20,20,15, 0,-30],
+     [-30, 5,10,15,15,10, 5,-30],
+     [-40,-20, 0, 5, 5, 0,-20,-40],
+     [-50,-40,-30,-30,-30,-30,-40,-50]],
+  B:[[-20,-10,-10,-10,-10,-10,-10,-20],
+     [-10, 0, 0, 0, 0, 0, 0,-10],
+     [-10, 0, 5,10,10, 5, 0,-10],
+     [-10, 5, 5,10,10, 5, 5,-10],
+     [-10, 0,10,10,10,10, 0,-10],
+     [-10,10,10,10,10,10,10,-10],
+     [-10, 5, 0, 0, 0, 0, 5,-10],
+     [-20,-10,-10,-10,-10,-10,-10,-20]],
+  R:[[ 0, 0, 0, 0, 0, 0, 0, 0],
+     [ 5,10,10,10,10,10,10, 5],
+     [-5, 0, 0, 0, 0, 0, 0,-5],
+     [-5, 0, 0, 0, 0, 0, 0,-5],
+     [-5, 0, 0, 0, 0, 0, 0,-5],
+     [-5, 0, 0, 0, 0, 0, 0,-5],
+     [-5, 0, 0, 0, 0, 0, 0,-5],
+     [ 0, 0, 0, 5, 5, 0, 0, 0]],
+  Q:[[-20,-10,-10,-5,-5,-10,-10,-20],
+     [-10, 0, 0, 0, 0, 0, 0,-10],
+     [-10, 0, 5, 5, 5, 5, 0,-10],
+     [ -5, 0, 5, 5, 5, 5, 0, -5],
+     [  0, 0, 5, 5, 5, 5, 0, -5],
+     [-10, 5, 5, 5, 5, 5, 0,-10],
+     [-10, 0, 5, 0, 0, 0, 0,-10],
+     [-20,-10,-10,-5,-5,-10,-10,-20]],
+  K:[[-30,-40,-40,-50,-50,-40,-40,-30],
+     [-30,-40,-40,-50,-50,-40,-40,-30],
+     [-30,-40,-40,-50,-50,-40,-40,-30],
+     [-30,-40,-40,-50,-50,-40,-40,-30],
+     [-20,-30,-30,-40,-40,-30,-30,-20],
+     [-10,-20,-20,-20,-20,-20,-20,-10],
+     [ 20, 20,  0,  0,  0,  0, 20, 20],
+     [ 20, 30, 10,  0,  0, 10, 30, 20]]
+};
+
+// ── Game state ──
+let board=[], turn='w', castling={wK:true,wQ:true,bK:true,bQ:true};
+let enPassant=null, halfmove=0, fullmove=1;
+let selected=null, legalMoves=[], gameOver=false;
+let moveHistory=[], capturedByBot=[], capturedByPlayer=[];
+let moveCount=0, difficulty=1;
+let lastFrom=null, lastTo=null;
+let promoCallback=null;
+let boardSize=0;
+let thinkTimeout=null;
+
+// ── FEN parser ──
+function loadFEN(fen){
+  const parts=fen.split(' ');
+  const rows=parts[0].split('/');
+  board=[];
+  for(let r=0;r<8;r++){
+    const row=[];
+    for(const ch of rows[r]){
+      if(isNaN(ch)) row.push(ch);
+      else for(let i=0;i<+ch;i++) row.push(EMPTY);
+    }
+    board.push(row);
+  }
+  turn=parts[1];
+  const c=parts[2];
+  castling={wK:c.includes('K'),wQ:c.includes('Q'),bK:c.includes('k'),bQ:c.includes('q')};
+  enPassant=parts[3]==='--'||parts[3]==='-'?null:algebraicToRC(parts[3]);
+  halfmove=+parts[4]; fullmove=+parts[5];
+}
+
+function algebraicToRC(sq){ return [8-+sq[1], sq.charCodeAt(0)-97]; }
+
+function isWhite(p){ return p>='A'&&p<='Z'; }
+function isBlack(p){ return p>='a'&&p<='z'; }
+function isEnemy(p,forWhite){ return forWhite?isBlack(p):isWhite(p); }
+function isFriend(p,forWhite){ return forWhite?isWhite(p):isBlack(p); }
+function inBounds(r,c){ return r>=0&&r<8&&c>=0&&c<8; }
+
+function cloneBoard(b){ return b.map(r=>[...r]); }
+function cloneCastling(c){ return {...c}; }
+
+// ── Move generation ──
+function getPseudoMoves(b,r,c,forWhite,ep,cast){
+  const moves=[], p=b[r][c];
+  const up=forWhite?-1:1;
+  const startRow=forWhite?6:1;
+  const promoRow=forWhite?0:7;
+
+  const push=(nr,nc,flags={})=>{
+    if(inBounds(nr,nc)) moves.push({fr:r,fc:c,tr:nr,tc:nc,...flags});
+  };
+
+  const P_upper=p.toUpperCase();
+
+  if(P_upper==='P'){
+    // forward
+    if(inBounds(r+up,c)&&b[r+up][c]===EMPTY){
+      if(r+up===promoRow) ['Q','R','B','N'].forEach(pr=>push(r+up,c,{promo:pr}));
+      else push(r+up,c);
+      // double push
+      if(r===startRow&&b[r+up][c]===EMPTY&&b[r+2*up][c]===EMPTY)
+        push(r+2*up,c,{ep:true});
+    }
+    // captures
+    [-1,1].forEach(dc=>{
+      const nr=r+up,nc=c+dc;
+      if(!inBounds(nr,nc))return;
+      if(isEnemy(b[nr][nc],forWhite)){
+        if(nr===promoRow) ['Q','R','B','N'].forEach(pr=>push(nr,nc,{promo:pr}));
+        else push(nr,nc);
+      }
+      // en passant
+      if(ep&&ep[0]===nr&&ep[1]===nc) push(nr,nc,{epCapture:true});
+    });
+  }
+  else if(P_upper==='N'){
+    [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]].forEach(([dr,dc])=>{
+      const nr=r+dr,nc=c+dc;
+      if(inBounds(nr,nc)&&!isFriend(b[nr][nc],forWhite)) push(nr,nc);
+    });
+  }
+  else if(P_upper==='B'||P_upper==='Q'){
+    [[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([dr,dc])=>{
+      let nr=r+dr,nc=c+dc;
+      while(inBounds(nr,nc)){
+        if(b[nr][nc]===EMPTY){ push(nr,nc); nr+=dr; nc+=dc; }
+        else{ if(isEnemy(b[nr][nc],forWhite)) push(nr,nc); break; }
+      }
+    });
+  }
+  if(P_upper==='R'||P_upper==='Q'){
+    [[0,1],[0,-1],[1,0],[-1,0]].forEach(([dr,dc])=>{
+      let nr=r+dr,nc=c+dc;
+      while(inBounds(nr,nc)){
+        if(b[nr][nc]===EMPTY){ push(nr,nc); nr+=dr; nc+=dc; }
+        else{ if(isEnemy(b[nr][nc],forWhite)) push(nr,nc); break; }
+      }
+    });
+  }
+  if(P_upper==='K'){
+    [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc])=>{
+      const nr=r+dr,nc=c+dc;
+      if(inBounds(nr,nc)&&!isFriend(b[nr][nc],forWhite)) push(nr,nc);
+    });
+    // castling
+    if(forWhite&&cast.wK&&b[7][4]==='K'&&b[7][5]===EMPTY&&b[7][6]===EMPTY&&b[7][7]==='R')
+      push(7,6,{castle:'K'});
+    if(forWhite&&cast.wQ&&b[7][4]==='K'&&b[7][3]===EMPTY&&b[7][2]===EMPTY&&b[7][1]===EMPTY&&b[7][0]==='R')
+      push(7,2,{castle:'Q'});
+    if(!forWhite&&cast.bK&&b[0][4]==='k'&&b[0][5]===EMPTY&&b[0][6]===EMPTY&&b[0][7]==='r')
+      push(0,6,{castle:'K'});
+    if(!forWhite&&cast.bQ&&b[0][4]==='k'&&b[0][3]===EMPTY&&b[0][2]===EMPTY&&b[0][1]===EMPTY&&b[0][0]==='r')
+      push(0,2,{castle:'Q'});
+  }
+  return moves;
+}
+
+function findKing(b,forWhite){
+  const k=forWhite?'K':'k';
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++) if(b[r][c]===k) return [r,c];
+  return null;
+}
+
+function isSquareAttacked(b,r,c,byWhite){
+  // check if any piece of color byWhite attacks [r,c]
+  for(let pr=0;pr<8;pr++) for(let pc=0;pc<8;pc++){
+    const p=b[pr][pc];
+    if(p===EMPTY) continue;
+    if(byWhite?!isWhite(p):!isBlack(p)) continue;
+    const ms=getPseudoMoves(b,pr,pc,byWhite,null,{wK:false,wQ:false,bK:false,bQ:false});
+    if(ms.some(m=>m.tr===r&&m.tc===c)) return true;
+  }
+  return false;
+}
+
+function applyMove(b,m,forWhite){
+  const nb=cloneBoard(b);
+  const p=nb[m.fr][m.fc];
+  nb[m.tr][m.tc]= m.promo ? (forWhite?m.promo:m.promo.toLowerCase()) : p;
+  nb[m.fr][m.fc]=EMPTY;
+  if(m.epCapture){ const er=m.fr; nb[er][m.tc]=EMPTY; }
+  if(m.castle==='K'){ if(forWhite){nb[7][5]='R';nb[7][7]=EMPTY;}else{nb[0][5]='r';nb[0][7]=EMPTY;} }
+  if(m.castle==='Q'){ if(forWhite){nb[7][3]='R';nb[7][0]=EMPTY;}else{nb[0][3]='r';nb[0][0]=EMPTY;} }
+  return nb;
+}
+
+function getLegalMoves(b,forWhite,ep,cast){
+  const all=[];
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const p=b[r][c];
+    if(p===EMPTY) continue;
+    if(forWhite?!isWhite(p):!isBlack(p)) continue;
+    const pseudo=getPseudoMoves(b,r,c,forWhite,ep,cast);
+    for(const m of pseudo){
+      if(m.castle){
+        // make sure king not in check, not passing through check
+        const mid=m.castle==='K'?5:3;
+        if(isSquareAttacked(b,forWhite?7:0,4,!forWhite)) continue;
+        if(isSquareAttacked(b,forWhite?7:0,mid,!forWhite)) continue;
+      }
+      const nb=applyMove(b,m,forWhite);
+      const kp=findKing(nb,forWhite);
+      if(!kp) continue;
+      if(!isSquareAttacked(nb,kp[0],kp[1],!forWhite)) all.push(m);
+    }
+  }
+  return all;
+}
+
+function isInCheck(b,forWhite){
+  const kp=findKing(b,forWhite);
+  if(!kp) return false;
+  return isSquareAttacked(b,kp[0],kp[1],!forWhite);
+}
+
+// ── Evaluation ──
+function evalBoard(b){
+  let score=0;
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const p=b[r][c];
+    if(p===EMPTY) continue;
+    const w=isWhite(p);
+    const up=p.toUpperCase();
+    const val=PIECE_VAL[up]||0;
+    const pstRow=w?r:7-r;
+    const pst=(PST[up]?PST[up][pstRow][c]:0);
+    score+=(w?1:-1)*(val+pst);
+  }
+  return score;
+}
+
+// ── Minimax with alpha-beta ──
+// NOTE: even at "hard" we cap depth low and add randomness so the bot stays beatable
+function minimax(b,depth,alpha,beta,maxing,ep,cast,diff){
+  const forWhite=maxing;
+  const legal=getLegalMoves(b,forWhite,ep,cast);
+  if(legal.length===0){
+    return isInCheck(b,forWhite) ? (maxing?-30000:30000) : 0;
+  }
+  if(depth===0) return evalBoard(b);
+
+  if(maxing){
+    let best=-Infinity;
+    for(const m of legal){
+      const nb=applyMove(b,m,true);
+      const nc=updateCastlingRights(cast,m,b);
+      const nep=m.ep?[m.tr,m.tc]:null;
+      const v=minimax(nb,depth-1,alpha,beta,false,nep,nc,diff);
+      best=Math.max(best,v); alpha=Math.max(alpha,v);
+      if(beta<=alpha) break;
+    }
+    return best;
+  } else {
+    let best=Infinity;
+    for(const m of legal){
+      const nb=applyMove(b,m,false);
+      const nc=updateCastlingRights(cast,m,b);
+      const nep=m.ep?[m.tr,m.tc]:null;
+      const v=minimax(nb,depth-1,alpha,beta,true,nep,nc,diff);
+      best=Math.min(best,v); beta=Math.min(beta,v);
+      if(beta<=alpha) break;
+    }
+    return best;
+  }
+}
+
+function updateCastlingRights(cast,m,b){
+  const nc=cloneCastling(cast);
+  const p=b[m.fr][m.fc];
+  if(p==='K') { nc.wK=false; nc.wQ=false; }
+  if(p==='k') { nc.bK=false; nc.bQ=false; }
+  if(p==='R'&&m.fr===7&&m.fc===7) nc.wK=false;
+  if(p==='R'&&m.fr===7&&m.fc===0) nc.wQ=false;
+  if(p==='r'&&m.fr===0&&m.fc===7) nc.bK=false;
+  if(p==='r'&&m.fr===0&&m.fc===0) nc.bQ=false;
+  return nc;
+}
+
+// ── Bot move chooser ──
+// Difficulty 1-5: depth 0-2, with heavy randomness at low levels
+function getBotMove(){
+  const legal=getLegalMoves(board,false,enPassant,castling);
+  if(!legal.length) return null;
+
+  const diff=difficulty;
+  // depth: 1→0, 2→1, 3→1, 4→2, 5→2
+  const depth=[0,0,1,1,2,2][diff]||0;
+  // randomness: how often we pick a random move instead of best
+  // diff 1: 70%, 2: 40%, 3: 20%, 4: 10%, 5: 5%
+  const randChance=[0,.70,.40,.20,.10,.05][diff]||0;
+
+  if(Math.random()<randChance){
+    return legal[Math.floor(Math.random()*legal.length)];
+  }
+
+  // Score each legal move
+  let best=Infinity, bestMoves=[];
+  for(const m of legal){
+    const nb=applyMove(board,m,false);
+    const nc=updateCastlingRights(castling,m,board);
+    const nep=m.ep?[m.tr,m.tc]:null;
+    let score;
+    if(depth===0){
+      score=evalBoard(nb);
+    } else {
+      score=minimax(nb,depth,-Infinity,Infinity,true,nep,nc,diff);
+    }
+    if(score<best-5){ best=score; bestMoves=[m]; }
+    else if(score<best+5) bestMoves.push(m);
+  }
+
+  // At easy levels add tiny random noise
+  if(diff<=2&&bestMoves.length>1)
+    return bestMoves[Math.floor(Math.random()*bestMoves.length)];
+  return bestMoves[0]||legal[0];
+}
+
+// ══════════════════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════════════════
+let squares=[];
+
+function buildBoard(){
+  const boardEl=document.getElementById('board');
+  boardEl.innerHTML='';
+  squares=[];
+  const sz=getBoardSize();
+  boardEl.style.width=sz+'px';
+  boardEl.style.height=sz+'px';
+  boardSize=sz;
+
+  for(let r=0;r<8;r++){
+    const row=[];
+    for(let c=0;c<8;c++){
+      const sq=document.createElement('div');
+      sq.className='sq '+((r+c)%2===0?'light':'dark');
+      sq.style.width=(sz/8)+'px';
+      sq.style.height=(sz/8)+'px';
+
+      // coord labels
+      if(c===0){
+        const rl=document.createElement('div');
+        rl.className='coord-rank'; rl.textContent=8-r;
+        sq.appendChild(rl);
+      }
+      if(r===7){
+        const fl=document.createElement('div');
+        fl.className='coord-file'; fl.textContent=String.fromCharCode(97+c);
+        sq.appendChild(fl);
+      }
+
+      sq.addEventListener('pointerdown',()=>onSquareClick(r,c));
+      boardEl.appendChild(sq);
+      row.push(sq);
+    }
+    squares.push(row);
+  }
+}
+
+function getBoardSize(){
+  const ba=document.getElementById('boardArea');
+  const maxW=Math.min(ba.clientWidth-16, ba.clientHeight-16, 520);
+  return Math.max(200, maxW - (maxW%8));
+}
+
+function render(){
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++){
+    const sq=squares[r][c];
+    // clear classes
+    sq.className='sq '+((r+c)%2===0?'light':'dark');
+    if(lastFrom&&lastFrom[0]===r&&lastFrom[1]===c) sq.classList.add('last-from');
+    if(lastTo  &&lastTo[0]===r  &&lastTo[1]===c)   sq.classList.add('last-to');
+
+    // remove old piece
+    const oldPiece=sq.querySelector('.piece');
+    if(oldPiece) oldPiece.remove();
+
+    const p=board[r][c];
+    if(p!==EMPTY){
+      const el=document.createElement('div');
+      el.className='piece';
+      el.textContent=GLYPHS[p]||p;
+      sq.appendChild(el);
+    }
+  }
+
+  // selected & hints
+  if(selected){
+    squares[selected[0]][selected[1]].classList.add('selected');
+    legalMoves.forEach(m=>{
+      const sq=squares[m.tr][m.tc];
+      if(board[m.tr][m.tc]!==EMPTY) sq.classList.add('capture-hint');
+      else sq.classList.add('hint');
+    });
+  }
+
+  // king in check highlight
+  if(isInCheck(board, turn==='w')){
+    const kp=findKing(board,turn==='w');
+    if(kp) squares[kp[0]][kp[1]].classList.add('king-check');
+  }
+
+  // captured
+  renderCaptured();
+}
+
+const CAP_GLYPHS={P:'♙',R:'♖',N:'♘',B:'♗',Q:'♕',p:'♟',r:'♜',n:'♞',b:'♝',q:'♛'};
+function renderCaptured(){
+  const bot=document.getElementById('capByBot');
+  const player=document.getElementById('capByPlayer');
+  bot.innerHTML=capturedByBot.map(p=>`<span class="cap-piece">${CAP_GLYPHS[p]||p}</span>`).join('');
+  player.innerHTML=capturedByPlayer.map(p=>`<span class="cap-piece">${CAP_GLYPHS[p]||p}</span>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════
+//  CLICK HANDLER
+// ══════════════════════════════════════════════════════════
+function onSquareClick(r,c){
+  if(gameOver||turn!=='w') return;
+
+  // If promotion pending
+  if(promoCallback) return;
+
+  const p=board[r][c];
+
+  if(selected){
+    // try to move
+    const move=legalMoves.find(m=>m.tr===r&&m.tc===c);
+    if(move){
+      if(move.promo){
+        // offer promo choice — auto pick Q for easy mode
+        if(difficulty<=2){
+          executeMove({...move,promo:'Q'},true);
+        } else {
+          showPromoModal(m2=>executeMove({...move,promo:m2},true));
+        }
+      } else {
+        executeMove(move,true);
+      }
+      selected=null; legalMoves=[];
+      return;
+    }
+    // clicked another own piece
+    if(isWhite(p)){
+      selected=[r,c];
+      legalMoves=getLegalMoves(board,true,enPassant,castling).filter(m=>m.fr===r&&m.fc===c);
+      render(); return;
+    }
+    selected=null; legalMoves=[]; render(); return;
+  }
+
+  // select own piece
+  if(isWhite(p)){
+    selected=[r,c];
+    legalMoves=getLegalMoves(board,true,enPassant,castling).filter(m=>m.fr===r&&m.fc===c);
+    render();
+  }
+}
+
+function showPromoModal(cb){
+  promoCallback=cb;
+  document.getElementById('promoModal').style.display='flex';
+}
+document.querySelectorAll('.promo-piece').forEach(el=>{
+  el.addEventListener('click',()=>{
+    if(!promoCallback) return;
+    const p=el.dataset.p;
+    document.getElementById('promoModal').style.display='none';
+    const cb=promoCallback; promoCallback=null;
+    cb(p);
+  });
+});
+
+// ══════════════════════════════════════════════════════════
+//  EXECUTE MOVE
+// ══════════════════════════════════════════════════════════
+function executeMove(m, isPlayer){
+  const captured=board[m.tr][m.tc];
+  if(captured!==EMPTY){
+    if(isPlayer) capturedByPlayer.push(captured);
+    else capturedByBot.push(captured);
+  }
+  if(m.epCapture){
+    const ep=board[m.fr][m.tc];
+    if(ep!==EMPTY){ if(isPlayer) capturedByPlayer.push(ep); else capturedByBot.push(ep); }
+  }
+
+  // save for undo
+  moveHistory.push({
+    board:cloneBoard(board),
+    castling:cloneCastling(castling),
+    enPassant:enPassant?[...enPassant]:null,
+    capturedByBot:[...capturedByBot],
+    capturedByPlayer:[...capturedByPlayer],
+    lastFrom:lastFrom?[...lastFrom]:null,
+    lastTo:lastTo?[...lastTo]:null,
+    turn, moveCount
+  });
+
+  castling=updateCastlingRights(castling,m,board);
+  enPassant=m.ep?[m.tr,m.tc]:null;
+  board=applyMove(board,m,isPlayer);
+  lastFrom=[m.fr,m.fc]; lastTo=[m.tr,m.tc];
+  turn= turn==='w'?'b':'w';
+  moveCount++;
+  document.getElementById('moveCount').textContent=moveCount;
+
+  render();
+  checkGameEnd();
+  if(!gameOver){
+    if(turn==='b') scheduleBotMove();
+    else updateStatus('Your turn! 🌸');
+  }
+}
+
+function checkGameEnd(){
+  const forWhite=turn==='w';
+  const legal=getLegalMoves(board,forWhite,enPassant,castling);
+  if(legal.length===0){
+    gameOver=true;
+    if(isInCheck(board,forWhite)){
+      // checkmate
+      if(forWhite) triggerEnd(false,'checkmate'); // player lost
+      else triggerEnd(true,'checkmate');          // player won
+    } else {
+      triggerEnd(null,'stalemate');
+    }
+    return;
+  }
+  // check
+  if(isInCheck(board,forWhite)){
+    updateStatus(forWhite?'⚠️ You are in Check!':'Bot is in check 😮');
+  } else {
+    if(forWhite) updateStatus('Your turn! 🌸');
+    else updateStatus('Bot is thinking... 🤔');
+  }
+}
+
+function scheduleBotMove(){
+  updateStatus('Bot is thinking... 🤔');
+  // small delay so UI updates first
+  const delay = difficulty>=4 ? 600 : 300;
+  thinkTimeout=setTimeout(()=>{
+    if(gameOver||turn!=='b') return;
+    const m=getBotMove();
+    if(!m){ checkGameEnd(); return; }
+    if(m.promo) m.promo=m.promo.toLowerCase(); // bot promotes to queen always
+    if(!m.promo&&board[m.fr][m.fc].toLowerCase()==='p'){
+      const promoRow=turn==='b'?7:0;
+      if(m.tr===promoRow) m.promo='q';
+    }
+    executeMove(m,false);
+  },delay);
+}
+
+function updateStatus(msg){
+  document.getElementById('statusBar').textContent=msg;
+  document.getElementById('turnPill').textContent=turn==='w'?'Your Turn':'Bot Thinking…';
+}
+
+function triggerEnd(playerWon, reason){
+  gameOver=true;
+  const ov=document.getElementById('gameOverOv');
+  const title=document.getElementById('resultTitle');
+  const msg=document.getElementById('resultMsg');
+  const fin=document.getElementById('finalMoves');
+  const fd=document.getElementById('finalDiff');
+
+  if(reason==='stalemate'){
+    title.textContent='Stalemate! 🤝';
+    msg.textContent='It\'s a draw — you played so well! 🌸💗';
+  } else if(playerWon){
+    title.textContent='You Won!! 🏆🌸';
+    msg.textContent='✨ I always believe in you ✨\nYou beat the bot, darling! 💖🎀';
+  } else {
+    title.textContent='Oopsie~ 💕';
+    msg.textContent='💖 You would always win for me,\nno matter what 🎀💗\nTry again, darling!';
+  }
+  fin.textContent=moveCount;
+  fd.textContent=DIFF_SHORT[difficulty];
+  setTimeout(()=>{ ov.style.display='flex'; },600);
+}
+
+// ══════════════════════════════════════════════════════════
+//  UNDO
+// ══════════════════════════════════════════════════════════
+function undo(){
+  // undo 2 moves (player + bot)
+  const steps=moveHistory.length>=2?2:moveHistory.length;
+  for(let i=0;i<steps;i++){
+    const s=moveHistory.pop();
+    if(!s) break;
+    board=s.board; castling=s.castling; enPassant=s.enPassant;
+    capturedByBot=s.capturedByBot; capturedByPlayer=s.capturedByPlayer;
+    lastFrom=s.lastFrom; lastTo=s.lastTo;
+    turn=s.turn; moveCount=s.moveCount;
+  }
+  gameOver=false;
+  selected=null; legalMoves=[];
+  if(thinkTimeout) clearTimeout(thinkTimeout);
+  document.getElementById('moveCount').textContent=moveCount;
+  render();
+  updateStatus('Your turn! 🌸');
+}
+
+// ══════════════════════════════════════════════════════════
+//  START / MENU
+// ══════════════════════════════════════════════════════════
+function startGame(){
+  difficulty=+slider.value;
+  loadFEN(START_FEN);
+  moveHistory=[]; capturedByBot=[]; capturedByPlayer=[];
+  selected=null; legalMoves=[]; gameOver=false;
+  lastFrom=null; lastTo=null; moveCount=0;
+  enPassant=null;
+  turn='w';
+  if(thinkTimeout) clearTimeout(thinkTimeout);
+
+  document.getElementById('menuOv').style.display='none';
+  document.getElementById('gameOverOv').style.display='none';
+  document.getElementById('gameWrap').style.display='flex';
+  document.getElementById('diffPill').textContent=DIFF_SHORT[difficulty];
+  document.getElementById('moveCount').textContent='0';
+
+  buildBoard();
+  render();
+  updateStatus('Your turn! 🌸');
+}
+
+function goToMenu(){
+  if(thinkTimeout) clearTimeout(thinkTimeout);
+  gameOver=true;
+  document.getElementById('gameWrap').style.display='none';
+  document.getElementById('gameOverOv').style.display='none';
+  document.getElementById('menuOv').style.display='flex';
+}
+
+// Responsive board resize
+window.addEventListener('resize',()=>{
+  if(document.getElementById('gameWrap').style.display==='flex'){
+    buildBoard(); render();
+  }
+});
+
+// ── Button wiring ──
+document.getElementById('startBtn').addEventListener('click', startGame);
+document.getElementById('restartBtn').addEventListener('click',()=>{
+  document.getElementById('gameOverOv').style.display='none';
+  startGame();
+});
+document.getElementById('menuBtn').addEventListener('click', goToMenu);
+document.getElementById('menuBtnGame').addEventListener('click', goToMenu);
+document.getElementById('undoBtn').addEventListener('click',()=>{
+  if(turn==='w'&&!gameOver) undo();
+});
+document.getElementById('resignBtn').addEventListener('click',()=>{
+  if(!gameOver){ gameOver=true; triggerEnd(false,'resign'); }
+});
+</script>
+</body>
+</html>
