@@ -301,17 +301,17 @@ input[type=range]#diffSlider::-moz-range-thumb{
     <div class="bow">🎀</div>
     <span class="bop" style="font-size:clamp(2.2rem,7vw,3.5rem)">♟️</span>
     <h1>Pink Chess!</h1>
-    <p class="sub">Play a beautiful game of chess against a budha bot 🌸<br>You are always the White pieces 💗</p>
+    <p class="sub">Play a beautiful game of chess against the बूढ़ा Bot 🌸<br>You are always the White pieces 💗</p>
 
     <!-- DIFFICULTY SLIDER -->
     <div class="diff-wrap">
-      <div id="diffBadge">🌸 Kitten — Super Easy</div>
+      <div id="diffBadge">🐱 Kitten — Super Easy</div>
       <input type="range" id="diffSlider" min="1" max="5" value="1" step="1"/>
       <div class="diff-label-row">
         <span id="dl1" class="act">🐱<br>Kitten</span>
         <span id="dl2">🌸<br>Bunny</span>
         <span id="dl3">🦋<br>Fairy</span>
-        <span id="dl4">⭐<br>Star</span>
+        <span id="dl4">💫<br>Star</span>
         <span id="dl5">👑<br>Queen</span>
       </div>
     </div>
@@ -390,8 +390,8 @@ input[type=range]#diffSlider::-moz-range-thumb{
 // ══════════════════════════════════════════════════════════
 //  DIFFICULTY SLIDER
 // ══════════════════════════════════════════════════════════
-const DIFF_NAMES = ['','🐱 Kitten — Super Easy','🌸 Bunny — Easy','🦋 Fairy — Medium','⭐ Star — Hard','👑 Queen — Very Hard'];
-const DIFF_SHORT = ['','🐱 Kitten','🌸 Bunny','🦋 Fairy','⭐ Star','👑 Queen'];
+const DIFF_NAMES = ['','🐱 Kitten — Super Easy','🌸 Bunny — Easy','🦋 Fairy — Medium','💫 Star — Hard','👑 Queen — Very Hard'];
+const DIFF_SHORT = ['','🐱 Kitten','🌸 Bunny','🦋 Fairy','💫 Star','👑 Queen'];
 const slider = document.getElementById('diffSlider');
 const diffBadge = document.getElementById('diffBadge');
 
@@ -602,4 +602,4 @@ function findKing(b,forWhite){
 
 function isSquareAttacked(b,r,c,byWhite){
   // check if any piece of color byWhite attacks [r,c]
-  for(let pr=0;pr<8;pr
+  for(let pr=0;pr<
